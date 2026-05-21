@@ -1,8 +1,18 @@
 import { useState } from 'react'
 import CodeBlock from '../components/CodeBlock'
+import BadgeDemo from '../demos/BadgeDemo'
+import ButtonDemo from '../demos/ButtonDemo'
 import CollapsibleDemo from '../demos/CollapsibleDemo'
 import DialogDemo from '../demos/DialogDemo'
+import DropdownMenuDemo from '../demos/DropdownMenuDemo'
+import AvatarDemo from '../demos/AvatarDemo'
+import InputDemo from '../demos/InputDemo'
+import SkeletonDemo from '../demos/SkeletonDemo'
+import SelectDemo from '../demos/SelectDemo'
 import TabsDemo from '../demos/TabsDemo'
+import ToastDemo, { useToastDemo } from '../demos/ToastDemo'
+import ToggleDemo from '../demos/ToggleDemo'
+import TooltipDemo from '../demos/TooltipDemo'
 
 /* ─── Design Tokens data ─── */
 
@@ -53,6 +63,17 @@ const demoTabs = [
 export default function ShowcasePage() {
   const [demoOpen, setDemoOpen] = useState(false)
   const [destructiveOpen, setDestructiveOpen] = useState(false)
+  const [layers, setLayers] = useState({
+    satellites: true,
+    sigint: true,
+    maritime: false,
+  })
+  const [query, setQuery] = useState('')
+  const [endpoint, setEndpoint] = useState('wss://feed.shadowbroker.local')
+  const [apiKey, setApiKey] = useState('')
+  const [source, setSource] = useState('satellite')
+  const [menuAction, setMenuAction] = useState('none')
+  const toasts = useToastDemo()
   const [activeTheme, setActiveTheme] = useState<keyof typeof themes>('cyan')
   const theme = themes[activeTheme]
 
@@ -393,11 +414,396 @@ export default function ShowcasePage() {
       <div className="section-divider" />
 
       {/* ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
-          04 Design Tokens
+          04 Button
+          ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ */}
+      <section id="button" className="fade-in">
+        <div className="flex items-center gap-3 mb-6">
+          <span className="text-[11px] tracking-[0.2em] text-cyan-500 font-bold bg-cyan-500/10 px-2 py-0.5 border border-cyan-500/20">04</span>
+          <h2 className="text-[12px] tracking-[0.2em] text-cyan-300 font-bold uppercase">Button</h2>
+        </div>
+        <p className="text-[11px] text-gray-500 mb-6 leading-relaxed max-w-3xl">
+          Unified button variants remove repeated class strings and keep interaction feedback consistent across actions.
+        </p>
+        <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
+          <div>
+            <div className="text-[10px] tracking-[0.2em] text-gray-500 mb-3 uppercase">Usage</div>
+            <CodeBlock language="tsx">
+{`<Button variant="primary" size="md">Deploy</Button>
+<Button variant="destructive" size="md">Delete</Button>
+<Button variant="ghost" size="sm" icon={<Search />}>Search</Button>
+<Button variant="outline" size="lg" loading>Syncing</Button>`}
+</CodeBlock>
+          </div>
+          <div>
+            <div className="text-[10px] tracking-[0.2em] text-gray-500 mb-3 uppercase">Live Demo</div>
+            <div className="border border-cyan-900/40 bg-[#0a0a0a]/90 rounded-sm panel-glow p-3 flex flex-wrap gap-2">
+              <ButtonDemo variant="primary" icon={<span>◎</span>}>Deploy</ButtonDemo>
+              <ButtonDemo variant="destructive">Terminate</ButtonDemo>
+              <ButtonDemo variant="ghost" size="sm">Details</ButtonDemo>
+              <ButtonDemo variant="outline" size="lg">Open Layer</ButtonDemo>
+              <ButtonDemo variant="primary" loading>Sync</ButtonDemo>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <div className="section-divider" />
+
+      {/* ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+          05 Badge
+          ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ */}
+      <section id="badge" className="fade-in">
+        <div className="flex items-center gap-3 mb-6">
+          <span className="text-[11px] tracking-[0.2em] text-cyan-500 font-bold bg-cyan-500/10 px-2 py-0.5 border border-cyan-500/20">05</span>
+          <h2 className="text-[12px] tracking-[0.2em] text-cyan-300 font-bold uppercase">Badge</h2>
+        </div>
+        <p className="text-[11px] text-gray-500 mb-6 leading-relaxed max-w-3xl">
+          Status labels in one primitive for online/offline/severity signals, with optional pulse marker for live states.
+        </p>
+        <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
+          <div>
+            <div className="text-[10px] tracking-[0.2em] text-gray-500 mb-3 uppercase">Usage</div>
+            <CodeBlock language="tsx">
+{`<Badge variant="default">TRACKING</Badge>
+<Badge variant="success" pulse>ONLINE</Badge>
+<Badge variant="warning" pulse>DEGRADED</Badge>
+<Badge variant="destructive" pulse>CRITICAL</Badge>`}
+</CodeBlock>
+          </div>
+          <div>
+            <div className="text-[10px] tracking-[0.2em] text-gray-500 mb-3 uppercase">Live Demo</div>
+            <div className="border border-cyan-900/40 bg-[#0a0a0a]/90 rounded-sm panel-glow p-3 flex flex-wrap items-center gap-2">
+              <BadgeDemo variant="default">Tracking</BadgeDemo>
+              <BadgeDemo variant="success" pulse>Online</BadgeDemo>
+              <BadgeDemo variant="warning" pulse>Degraded</BadgeDemo>
+              <BadgeDemo variant="destructive" pulse>Critical</BadgeDemo>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <div className="section-divider" />
+
+      {/* ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+          06 Toggle
+          ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ */}
+      <section id="toggle" className="fade-in">
+        <div className="flex items-center gap-3 mb-6">
+          <span className="text-[11px] tracking-[0.2em] text-cyan-500 font-bold bg-cyan-500/10 px-2 py-0.5 border border-cyan-500/20">06</span>
+          <h2 className="text-[12px] tracking-[0.2em] text-cyan-300 font-bold uppercase">Toggle</h2>
+        </div>
+        <p className="text-[11px] text-gray-500 mb-6 leading-relaxed max-w-3xl">
+          Reusable switch for high-density layer controls with consistent keyboard and disabled states.
+        </p>
+        <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
+          <div>
+            <div className="text-[10px] tracking-[0.2em] text-gray-500 mb-3 uppercase">Usage</div>
+            <CodeBlock language="tsx">
+{`<Toggle checked={enabled} onChange={setEnabled} />
+<Toggle checked={strictMode} onChange={setStrictMode} accentColor="red" />
+<Toggle checked={locked} onChange={setLocked} disabled />`}
+</CodeBlock>
+          </div>
+          <div>
+            <div className="text-[10px] tracking-[0.2em] text-gray-500 mb-3 uppercase">Live Demo</div>
+            <div className="border border-cyan-900/40 bg-[#0a0a0a]/90 rounded-sm panel-glow p-3 space-y-2">
+              <div className="flex items-center justify-between text-[11px] text-gray-300">
+                <span>Commercial Satellites</span>
+                <ToggleDemo checked={layers.satellites} onChange={(checked) => setLayers((prev) => ({ ...prev, satellites: checked }))} />
+              </div>
+              <div className="flex items-center justify-between text-[11px] text-gray-300">
+                <span>Military SIGINT</span>
+                <ToggleDemo checked={layers.sigint} onChange={(checked) => setLayers((prev) => ({ ...prev, sigint: checked }))} accentColor="purple" />
+              </div>
+              <div className="flex items-center justify-between text-[11px] text-gray-300">
+                <span>Maritime Tracking</span>
+                <ToggleDemo checked={layers.maritime} onChange={(checked) => setLayers((prev) => ({ ...prev, maritime: checked }))} accentColor="red" />
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <div className="section-divider" />
+
+      {/* ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+          07 Tooltip
+          ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ */}
+      <section id="tooltip" className="fade-in">
+        <div className="flex items-center gap-3 mb-6">
+          <span className="text-[11px] tracking-[0.2em] text-cyan-500 font-bold bg-cyan-500/10 px-2 py-0.5 border border-cyan-500/20">07</span>
+          <h2 className="text-[12px] tracking-[0.2em] text-cyan-300 font-bold uppercase">Tooltip</h2>
+        </div>
+        <p className="text-[11px] text-gray-500 mb-6 leading-relaxed max-w-3xl">
+          Lightweight hover and focus hint layer for dense icon groups without external dependencies.
+        </p>
+        <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
+          <div>
+            <div className="text-[10px] tracking-[0.2em] text-gray-500 mb-3 uppercase">Usage</div>
+            <CodeBlock language="tsx">
+{`<Tooltip content="Filter Intel" side="top">
+  <button>⌕</button>
+</Tooltip>
+<Tooltip content="Threat Overlay" side="right" delay={180}>
+  <button>⚠</button>
+</Tooltip>`}
+</CodeBlock>
+          </div>
+          <div>
+            <div className="text-[10px] tracking-[0.2em] text-gray-500 mb-3 uppercase">Live Demo</div>
+            <div className="border border-cyan-900/40 bg-[#0a0a0a]/90 rounded-sm panel-glow p-3 flex items-center gap-3">
+              <TooltipDemo content="Filter Intel" side="top">
+                <button className="text-[11px] text-cyan-300 border border-cyan-800/50 px-3 py-1.5 uppercase tracking-widest hover:bg-cyan-500/10">⌕</button>
+              </TooltipDemo>
+              <TooltipDemo content="Threat Overlay" side="right" delay={180}>
+                <button className="text-[11px] text-amber-300 border border-amber-800/50 px-3 py-1.5 uppercase tracking-widest hover:bg-amber-500/10">⚠</button>
+              </TooltipDemo>
+              <TooltipDemo content="Signal Controls" side="bottom">
+                <button className="text-[11px] text-purple-300 border border-purple-800/50 px-3 py-1.5 uppercase tracking-widest hover:bg-purple-500/10">◎</button>
+              </TooltipDemo>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <div className="section-divider" />
+
+      {/* ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+          08 Toast
+          ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ */}
+      <section id="toast" className="fade-in">
+        <div className="flex items-center gap-3 mb-6">
+          <span className="text-[11px] tracking-[0.2em] text-cyan-500 font-bold bg-cyan-500/10 px-2 py-0.5 border border-cyan-500/20">08</span>
+          <h2 className="text-[12px] tracking-[0.2em] text-cyan-300 font-bold uppercase">Toast</h2>
+        </div>
+        <p className="text-[11px] text-gray-500 mb-6 leading-relaxed max-w-3xl">
+          Compact notification stack with variant styling, auto-dismiss behavior, and manual close support.
+        </p>
+        <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
+          <div>
+            <div className="text-[10px] tracking-[0.2em] text-gray-500 mb-3 uppercase">Usage</div>
+            <CodeBlock language="tsx">
+{`toast.info("Feed Synced", "Signals are up to date")
+toast.success("Layer Enabled", "SIGINT layer is now active")
+toast.warning("Latency Spike", "Data source response > 2s")
+toast.error("Connection Lost", "Retrying secure channel")`}
+</CodeBlock>
+          </div>
+          <div>
+            <div className="text-[10px] tracking-[0.2em] text-gray-500 mb-3 uppercase">Live Demo</div>
+            <div className="border border-cyan-900/40 bg-[#0a0a0a]/90 rounded-sm panel-glow p-3 flex flex-wrap gap-2">
+              <ButtonDemo variant="outline" size="sm" onClick={() => toasts.push('info', 'Feed Synced', 'Signals are up to date')}>Info</ButtonDemo>
+              <ButtonDemo variant="primary" size="sm" onClick={() => toasts.push('success', 'Layer Enabled', 'SIGINT layer is now active')}>Success</ButtonDemo>
+              <ButtonDemo variant="ghost" size="sm" onClick={() => toasts.push('warning', 'Latency Spike', 'Data source response exceeded threshold')}>Warning</ButtonDemo>
+              <ButtonDemo variant="destructive" size="sm" onClick={() => toasts.push('error', 'Connection Lost', 'Retrying secure channel')}>Error</ButtonDemo>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <div className="section-divider" />
+
+      {/* ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+          09 Input
+          ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ */}
+      <section id="input" className="fade-in">
+        <div className="flex items-center gap-3 mb-6">
+          <span className="text-[11px] tracking-[0.2em] text-cyan-500 font-bold bg-cyan-500/10 px-2 py-0.5 border border-cyan-500/20">09</span>
+          <h2 className="text-[12px] tracking-[0.2em] text-cyan-300 font-bold uppercase">Input</h2>
+        </div>
+        <p className="text-[11px] text-gray-500 mb-6 leading-relaxed max-w-3xl">
+          Text field primitive for search and config entry with label, icon, size variants, and error state.
+        </p>
+        <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
+          <div>
+            <div className="text-[10px] tracking-[0.2em] text-gray-500 mb-3 uppercase">Usage</div>
+            <CodeBlock language="tsx">
+{`<Input label="Search Intel" placeholder="Type keyword..." icon={<Search />} />
+<Input label="Endpoint" value={url} onChange={setUrl} />
+<Input label="API Key" error="API key is required" />
+<Input disabled value="Locked by policy" />`}
+</CodeBlock>
+          </div>
+          <div>
+            <div className="text-[10px] tracking-[0.2em] text-gray-500 mb-3 uppercase">Live Demo</div>
+            <div className="border border-cyan-900/40 bg-[#0a0a0a]/90 rounded-sm panel-glow p-3 space-y-3">
+              <InputDemo label="Search Intel" placeholder="Person, org, ticker..." icon={<span>⌕</span>} value={query} onChange={setQuery} />
+              <InputDemo label="Feed Endpoint" size="sm" value={endpoint} onChange={setEndpoint} />
+              <InputDemo label="API Key" size="lg" placeholder="sk_live_..." value={apiKey} onChange={setApiKey} error={apiKey.length > 0 ? undefined : 'API key is required'} />
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <div className="section-divider" />
+
+      {/* ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+          10 Select
+          ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ */}
+      <section id="select" className="fade-in">
+        <div className="flex items-center gap-3 mb-6">
+          <span className="text-[11px] tracking-[0.2em] text-cyan-500 font-bold bg-cyan-500/10 px-2 py-0.5 border border-cyan-500/20">10</span>
+          <h2 className="text-[12px] tracking-[0.2em] text-cyan-300 font-bold uppercase">Select</h2>
+        </div>
+        <p className="text-[11px] text-gray-500 mb-6 leading-relaxed max-w-3xl">
+          Simple dropdown selector for feed source and filter controls with consistent menu visuals.
+        </p>
+        <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
+          <div>
+            <div className="text-[10px] tracking-[0.2em] text-gray-500 mb-3 uppercase">Usage</div>
+            <CodeBlock language="tsx">
+{`<Select
+  options={sources}
+  value={source}
+  onChange={setSource}
+  placeholder="Pick source"
+/>`}
+</CodeBlock>
+          </div>
+          <div>
+            <div className="text-[10px] tracking-[0.2em] text-gray-500 mb-3 uppercase">Live Demo</div>
+            <div className="border border-cyan-900/40 bg-[#0a0a0a]/90 rounded-sm panel-glow p-3 space-y-2">
+              <SelectDemo
+                options={[
+                  { label: 'Satellite Feed', value: 'satellite' },
+                  { label: 'SIGINT Network', value: 'sigint' },
+                  { label: 'Maritime Relay', value: 'maritime' },
+                ]}
+                value={source}
+                onChange={setSource}
+                placeholder="Choose source"
+              />
+              <div className="text-[10px] text-gray-500 uppercase tracking-[0.16em]">Active: {source}</div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <div className="section-divider" />
+
+      {/* ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+          11 DropdownMenu
+          ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ */}
+      <section id="dropdown-menu" className="fade-in">
+        <div className="flex items-center gap-3 mb-6">
+          <span className="text-[11px] tracking-[0.2em] text-cyan-500 font-bold bg-cyan-500/10 px-2 py-0.5 border border-cyan-500/20">11</span>
+          <h2 className="text-[12px] tracking-[0.2em] text-cyan-300 font-bold uppercase">DropdownMenu</h2>
+        </div>
+        <p className="text-[11px] text-gray-500 mb-6 leading-relaxed max-w-3xl">
+          Compact action menu for contextual operations like duplicate/export/archive/delete.
+        </p>
+        <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
+          <div>
+            <div className="text-[10px] tracking-[0.2em] text-gray-500 mb-3 uppercase">Usage</div>
+            <CodeBlock language="tsx">
+{`<DropdownMenu
+  align="end"
+  items={menuItems}
+  onSelect={handleAction}
+/>`}
+</CodeBlock>
+          </div>
+          <div>
+            <div className="text-[10px] tracking-[0.2em] text-gray-500 mb-3 uppercase">Live Demo</div>
+            <div className="border border-cyan-900/40 bg-[#0a0a0a]/90 rounded-sm panel-glow p-3 flex items-center justify-between">
+              <DropdownMenuDemo
+                align="end"
+                triggerLabel="Layer Actions"
+                items={[
+                  { label: 'Duplicate Layer', value: 'duplicate' },
+                  { label: 'Export Snapshot', value: 'export' },
+                  { label: 'Archive Layer', value: 'archive' },
+                  { label: 'Delete Layer', value: 'delete', tone: 'danger' },
+                ]}
+                onSelect={setMenuAction}
+              />
+              <span className="text-[10px] text-gray-500 uppercase tracking-[0.16em]">Last: {menuAction}</span>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <div className="section-divider" />
+
+      {/* ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+          12 Skeleton
+          ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ */}
+      <section id="skeleton" className="fade-in">
+        <div className="flex items-center gap-3 mb-6">
+          <span className="text-[11px] tracking-[0.2em] text-cyan-500 font-bold bg-cyan-500/10 px-2 py-0.5 border border-cyan-500/20">12</span>
+          <h2 className="text-[12px] tracking-[0.2em] text-cyan-300 font-bold uppercase">Skeleton</h2>
+        </div>
+        <p className="text-[11px] text-gray-500 mb-6 leading-relaxed max-w-3xl">
+          Loading placeholders for text blocks, list tiles, and profile rows to improve perceived responsiveness.
+        </p>
+        <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
+          <div>
+            <div className="text-[10px] tracking-[0.2em] text-gray-500 mb-3 uppercase">Usage</div>
+            <CodeBlock language="tsx">
+{`<Skeleton variant="text" width="70%" />
+<Skeleton variant="circular" width={32} height={32} />
+<Skeleton variant="rectangular" height={56} />`}
+</CodeBlock>
+          </div>
+          <div>
+            <div className="text-[10px] tracking-[0.2em] text-gray-500 mb-3 uppercase">Live Demo</div>
+            <div className="border border-cyan-900/40 bg-[#0a0a0a]/90 rounded-sm panel-glow p-3 space-y-3">
+              <div className="space-y-1.5">
+                <SkeletonDemo variant="text" width="75%" />
+                <SkeletonDemo variant="text" width="58%" />
+              </div>
+              <div className="flex items-center gap-2">
+                <SkeletonDemo variant="circular" width={28} height={28} />
+                <SkeletonDemo variant="rectangular" width="100%" height={36} />
+              </div>
+              <SkeletonDemo variant="rectangular" width="100%" height={50} />
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <div className="section-divider" />
+
+      {/* ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+          13 Avatar
+          ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ */}
+      <section id="avatar" className="fade-in">
+        <div className="flex items-center gap-3 mb-6">
+          <span className="text-[11px] tracking-[0.2em] text-cyan-500 font-bold bg-cyan-500/10 px-2 py-0.5 border border-cyan-500/20">13</span>
+          <h2 className="text-[12px] tracking-[0.2em] text-cyan-300 font-bold uppercase">Avatar</h2>
+        </div>
+        <p className="text-[11px] text-gray-500 mb-6 leading-relaxed max-w-3xl">
+          Avatar primitive with image fallback initials and status indicator for agents, sources, and operators.
+        </p>
+        <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
+          <div>
+            <div className="text-[10px] tracking-[0.2em] text-gray-500 mb-3 uppercase">Usage</div>
+            <CodeBlock language="tsx">
+{`<Avatar src={photo} fallback="SB" status="online" />
+<Avatar fallback="AI" size="lg" status="busy" />
+<Avatar fallback="ML" size="sm" status="offline" />`}
+</CodeBlock>
+          </div>
+          <div>
+            <div className="text-[10px] tracking-[0.2em] text-gray-500 mb-3 uppercase">Live Demo</div>
+            <div className="border border-cyan-900/40 bg-[#0a0a0a]/90 rounded-sm panel-glow p-3 flex items-center gap-3">
+              <AvatarDemo fallback="SB" size="sm" status="online" />
+              <AvatarDemo fallback="AI" size="md" status="offline" />
+              <AvatarDemo fallback="MK" size="lg" status="busy" />
+              <AvatarDemo src="https://images.unsplash.com/photo-1494790108377-be9c29b29330?w=96&h=96&fit=crop" fallback="OP" size="md" status="online" />
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <div className="section-divider" />
+
+      {/* ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+          14 Design Tokens
           ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ */}
       <section id="design-tokens" className="fade-in">
         <div className="flex items-center gap-3 mb-6">
-          <span className="text-[11px] tracking-[0.2em] text-cyan-500 font-bold bg-cyan-500/10 px-2 py-0.5 border border-cyan-500/20">04</span>
+          <span className="text-[11px] tracking-[0.2em] text-cyan-500 font-bold bg-cyan-500/10 px-2 py-0.5 border border-cyan-500/20">14</span>
           <h2 className="text-[12px] tracking-[0.2em] text-cyan-300 font-bold uppercase">Design Tokens</h2>
         </div>
         <p className="text-[11px] text-gray-500 mb-6 leading-relaxed max-w-3xl">
@@ -504,11 +910,11 @@ export default function ShowcasePage() {
       <div className="section-divider" />
 
       {/* ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
-          05 Impact Summary
+          15 Impact Summary
           ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ */}
       <section id="impact" className="fade-in">
         <div className="flex items-center gap-3 mb-6">
-          <span className="text-[11px] tracking-[0.2em] text-cyan-500 font-bold bg-cyan-500/10 px-2 py-0.5 border border-cyan-500/20">05</span>
+          <span className="text-[11px] tracking-[0.2em] text-cyan-500 font-bold bg-cyan-500/10 px-2 py-0.5 border border-cyan-500/20">15</span>
           <h2 className="text-[12px] tracking-[0.2em] text-cyan-300 font-bold uppercase">Impact Summary</h2>
         </div>
         <p className="text-[11px] text-gray-500 mb-6 leading-relaxed max-w-3xl">
@@ -567,6 +973,8 @@ import { TabBar } from `}<span className="str">'@/components/ui/tab-bar'</span>{
           </div>
         </div>
       </section>
+
+      <ToastDemo items={toasts.items} onClose={toasts.close} />
 
     </div>
   )
