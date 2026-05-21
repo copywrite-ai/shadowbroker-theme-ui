@@ -7,8 +7,11 @@ import DialogDemo from '../demos/DialogDemo'
 import DropdownMenuDemo from '../demos/DropdownMenuDemo'
 import AvatarDemo from '../demos/AvatarDemo'
 import InputDemo from '../demos/InputDemo'
+import ListDemo from '../demos/ListDemo'
+import ListPanelDemo from '../demos/ListPanelDemo'
 import SkeletonDemo from '../demos/SkeletonDemo'
 import SelectDemo from '../demos/SelectDemo'
+import SliderDemo from '../demos/SliderDemo'
 import TabsDemo from '../demos/TabsDemo'
 import ToastDemo, { useToastDemo } from '../demos/ToastDemo'
 import ToggleDemo from '../demos/ToggleDemo'
@@ -73,6 +76,7 @@ export default function ShowcasePage() {
   const [apiKey, setApiKey] = useState('')
   const [source, setSource] = useState('satellite')
   const [menuAction, setMenuAction] = useState('none')
+  const [panelOpacity, setPanelOpacity] = useState(82)
   const toasts = useToastDemo()
   const [activeTheme, setActiveTheme] = useState<keyof typeof themes>('cyan')
   const theme = themes[activeTheme]
@@ -799,11 +803,122 @@ toast.error("Connection Lost", "Retrying secure channel")`}
       <div className="section-divider" />
 
       {/* ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
-          14 Design Tokens
+          14 List
+          ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ */}
+      <section id="list" className="fade-in">
+        <div className="flex items-center gap-3 mb-6">
+          <span className="text-[11px] tracking-[0.2em] text-cyan-500 font-bold bg-cyan-500/10 px-2 py-0.5 border border-cyan-500/20">14</span>
+          <h2 className="text-[12px] tracking-[0.2em] text-cyan-300 font-bold uppercase">List</h2>
+        </div>
+        <p className="text-[11px] text-gray-500 mb-6 leading-relaxed max-w-3xl">
+          Structured data list primitive for feeds, watchlists, and alert queues with status accents.
+        </p>
+        <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
+          <div>
+            <div className="text-[10px] tracking-[0.2em] text-gray-500 mb-3 uppercase">Usage</div>
+            <CodeBlock language="tsx">
+{`<List
+  items={intelItems}
+  size="md"
+  bordered
+  divided
+/>`}
+</CodeBlock>
+          </div>
+          <div>
+            <div className="text-[10px] tracking-[0.2em] text-gray-500 mb-3 uppercase">Live Demo</div>
+            <ListDemo
+              items={[
+                { id: '1', title: 'SIGINT Burst Detected', description: 'North Atlantic relay cluster', status: 'warning', rightSlot: <BadgeDemo variant="warning">High</BadgeDemo> },
+                { id: '2', title: 'Satellite Uplink Stable', description: 'Latency 340ms / packet loss 0.1%', status: 'success', rightSlot: <BadgeDemo variant="success">OK</BadgeDemo> },
+                { id: '3', title: 'Credential Leak Mention', description: 'Forum index matched threat keyword', status: 'error', rightSlot: <BadgeDemo variant="destructive">Critical</BadgeDemo> },
+              ]}
+            />
+          </div>
+        </div>
+      </section>
+
+      <div className="section-divider" />
+
+      {/* ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+          15 ListPanel
+          ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ */}
+      <section id="list-panel" className="fade-in">
+        <div className="flex items-center gap-3 mb-6">
+          <span className="text-[11px] tracking-[0.2em] text-cyan-500 font-bold bg-cyan-500/10 px-2 py-0.5 border border-cyan-500/20">15</span>
+          <h2 className="text-[12px] tracking-[0.2em] text-cyan-300 font-bold uppercase">ListPanel</h2>
+        </div>
+        <p className="text-[11px] text-gray-500 mb-6 leading-relaxed max-w-3xl">
+          Scrollable panel + list composition for dense feeds; ideal for watchlists and long alert queues.
+        </p>
+        <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
+          <div>
+            <div className="text-[10px] tracking-[0.2em] text-gray-500 mb-3 uppercase">Usage</div>
+            <CodeBlock language="tsx">
+{`<ListPanel
+  title="Live Alerts"
+  items={alerts}
+  opacity={0.82}
+  maxBodyHeight={220}
+  accentColor="purple"
+/>
+<Slider min={0} max={100} value={82} onChange={setOpacity} />`}
+</CodeBlock>
+          </div>
+          <div>
+            <div className="text-[10px] tracking-[0.2em] text-gray-500 mb-3 uppercase">Live Demo</div>
+            <div className="relative border border-cyan-900/30 rounded-sm p-3 overflow-hidden" style={{ background: 'linear-gradient(135deg, rgba(8,30,40,0.35), rgba(40,10,50,0.24))' }}>
+              <div
+                aria-hidden="true"
+                className="absolute inset-0"
+                style={{
+                  backgroundImage: `
+                    linear-gradient(rgba(34,211,238,0.09) 1px, transparent 1px),
+                    linear-gradient(90deg, rgba(34,211,238,0.09) 1px, transparent 1px),
+                    radial-gradient(rgba(248,113,113,0.18) 1px, transparent 1px)
+                  `,
+                  backgroundSize: '20px 20px, 20px 20px, 10px 10px',
+                  backgroundPosition: '0 0, 0 0, 5px 5px',
+                }}
+              />
+              <div className="relative z-10 mb-3">
+                <SliderDemo
+                  label="Panel Opacity"
+                  min={0}
+                  max={100}
+                  value={panelOpacity}
+                  onChange={setPanelOpacity}
+                />
+              </div>
+              <div className="relative z-10">
+                <ListPanelDemo
+                  title="Live Alerts"
+                  icon={<span>◉</span>}
+                  accentColor="purple"
+                  opacity={panelOpacity / 100}
+                  maxBodyHeight={220}
+                  items={Array.from({ length: 10 }).map((_, i) => ({
+                    id: `alert-${i + 1}`,
+                    title: `Alert ${i + 1} · Signal Spike`,
+                    description: `Node-${(i % 4) + 1} / confidence ${(82 - i).toString()}%`,
+                    status: i % 5 === 0 ? 'error' : i % 3 === 0 ? 'warning' : 'default',
+                    rightSlot: <BadgeDemo variant={i % 5 === 0 ? 'destructive' : i % 3 === 0 ? 'warning' : 'default'}>{i % 5 === 0 ? 'Critical' : i % 3 === 0 ? 'High' : 'Track'}</BadgeDemo>,
+                  }))}
+                />
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <div className="section-divider" />
+
+      {/* ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+          16 Design Tokens
           ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ */}
       <section id="design-tokens" className="fade-in">
         <div className="flex items-center gap-3 mb-6">
-          <span className="text-[11px] tracking-[0.2em] text-cyan-500 font-bold bg-cyan-500/10 px-2 py-0.5 border border-cyan-500/20">14</span>
+          <span className="text-[11px] tracking-[0.2em] text-cyan-500 font-bold bg-cyan-500/10 px-2 py-0.5 border border-cyan-500/20">16</span>
           <h2 className="text-[12px] tracking-[0.2em] text-cyan-300 font-bold uppercase">Design Tokens</h2>
         </div>
         <p className="text-[11px] text-gray-500 mb-6 leading-relaxed max-w-3xl">
@@ -910,11 +1025,11 @@ toast.error("Connection Lost", "Retrying secure channel")`}
       <div className="section-divider" />
 
       {/* ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
-          15 Impact Summary
+          17 Impact Summary
           ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ */}
       <section id="impact" className="fade-in">
         <div className="flex items-center gap-3 mb-6">
-          <span className="text-[11px] tracking-[0.2em] text-cyan-500 font-bold bg-cyan-500/10 px-2 py-0.5 border border-cyan-500/20">15</span>
+          <span className="text-[11px] tracking-[0.2em] text-cyan-500 font-bold bg-cyan-500/10 px-2 py-0.5 border border-cyan-500/20">17</span>
           <h2 className="text-[12px] tracking-[0.2em] text-cyan-300 font-bold uppercase">Impact Summary</h2>
         </div>
         <p className="text-[11px] text-gray-500 mb-6 leading-relaxed max-w-3xl">

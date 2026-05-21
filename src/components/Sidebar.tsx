@@ -22,6 +22,8 @@ const navItems = [
       { label: 'DropdownMenu', id: 'dropdown-menu' },
       { label: 'Skeleton', id: 'skeleton' },
       { label: 'Avatar', id: 'avatar' },
+      { label: 'List', id: 'list' },
+      { label: 'ListPanel', id: 'list-panel' },
     ],
   },
   {
