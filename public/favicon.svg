@@ -1,4 +1,10 @@
-<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 32 32">
-  <rect width="32" height="32" rx="4" fill="#0a0a0a"/>
-  <text x="16" y="22" font-family="monospace" font-size="18" font-weight="bold" fill="#22d3ee" text-anchor="middle">S</text>
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64" role="img" aria-label="ScreenGrub favicon">
+  <defs>
+    <linearGradient id="bg" x1="0" x2="1" y1="0" y2="1">
+      <stop offset="0%" stop-color="#111111"/>
+      <stop offset="100%" stop-color="#2a2a2a"/>
+    </linearGradient>
+  </defs>
+  <rect x="4" y="4" width="56" height="56" rx="14" fill="url(#bg)"/>
+  <path d="M20 23.5c0-2.5 2-4.5 4.5-4.5h15c2.5 0 4.5 2 4.5 4.5v3h-5v-2.5H25v3.5c0 .8.7 1.5 1.5 1.5h11c3.6 0 6.5 2.9 6.5 6.5v4c0 2.5-2 4.5-4.5 4.5H24.5c-2.5 0-4.5-2-4.5-4.5v-3h5V39h14v-3.5c0-.8-.7-1.5-1.5-1.5h-11c-3.6 0-6.5-2.9-6.5-6.5v-4Z" fill="#ffffff"/>
 </svg>
